@@ -162,7 +162,6 @@ TablePlus allowed us to visualise the PostGreSQL database. We tested the backend
 ### Frontend 
 On day 4 we moved on to the frontend and laid out the main components focusing on functionality first. I built the line-up page, artist information modal, food and beverage menu page and order system. React Hooks were used throughout, specifically useState and useEffect. Axios was used to request relevant data from the backend to display on the frontend with JSX.
 
-
 #### Line up page
 ```javascript
  async function getLineUp() {
@@ -185,25 +184,61 @@ On day 4 we moved on to the frontend and laid out the main components focusing o
 ```
 * Axios was used to GET act data from the backend which was then saved as an array of acts in state. To display the full lineup, the acts array was mapped over to render each artist as JSX. The filterByStage() function sorts acts by stage name when the user clicks a tab. 
 
+#### Featured piece of code: order system 
+To combat the problem of waiting in line and missing the show we created an order system for attendees to buy food and drinks using the app. React hooks were used to link up the backend and frontend functionalities, for example:
+* Axios GET request retrieves the full menu data from backend, it's then mapped over and returns each product as a card in JSX. The filterByProduct function called on the array separates food and beverage items out on the front end. 
+* To create an order the backend requires a logged-in user to submit an array of products and an act id (for pickup logistics).It was important to use the frontend UI to gather the necessary data to submit an order request to the backend, this happened in stages. 
+** Each product has an ‘add to basket’ button, onClick the product is pushed to the products array (saved in state)
+
+<img width="875" alt="Screenshot 2021-04-26 at 16 42 32" src="https://user-images.githubusercontent.com/68645584/116111279-69886980-a6ae-11eb-830f-8c16f3b0a3a7.png">
+
+```javascript 
+ const [products, updateProducts] = useState([])
+ const [actID, updateActID] = useState('')
+ const token = localStorage.getItem('token')
+ const [basket, updateBasket] = useState([])
+ const [modal, showModal] = useState(false)
+
+  //function to add the selected products to products array 
+  function addToProducts(productID) {
+    const tempProductArr = [...products, productID]
+    return updateProducts(tempProductArr)
+  }
+  
+   //function to get the act id for the api request 
+  function getActId(key) {
+    const selectedAct = key.value
+    updateActID(selectedAct)
+  }
+  
+  function displayBasket() {
+    const tempBasket = []
+    products.forEach(product => {
+      const itemToShow = menu.find(item => {
+        return product === item.id
+      })
+      tempBasket.push(itemToShow)
+      updateBasket(tempBasket)
+    })
+    showModal(!modal)
+  }
+  
+  async function submitUserOrder(token, actID, products) {
+    try {
+      await axios.post(`/api/order/${actID}`, { products: products }, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      console.log()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+```
+
 ### Styling 
 
 A mixture of Bulma and standard css practises were used for styling. To keep with the festival theme we opted for a clean colour scheme with pops of bold colour and sans serif fonts.
-
-### Featured piece of code
-
-🏅order system : add to frontend 
-Used React hooks to link up the backend and frontend functionality 
-Axios GET request for the full menu data 
-filterByProduct function to separate food and beverage items out
-To create an order the backend requires a logged-in user to submit an array of products and an act id (for pickup logistics).
-In this case, it was important to use the frontend to gather the necessary data to submit an order request to the backend, this happened in stages. 
-Each product has an ‘add to basket’ button, onClick the product is pushed to the products array (saved in state)
-When the user selects a collection point the act is saved as state
-The user
-*** ^^ could do this as a flow chart for the user journey (design in canva?)
- The frontend allows the user to add products 
-Bearer token retrieved from localStorage 
-Using template literals to plug in the necessary variables 
 
 ### Known bugs and errors
 * Food and Drinks menu: can currently add products without a collection point which triggers an empty basket modal. This is due to the backend logic requiring all fields to create an order. I'd fix this by adding an error message on the front end to remind the user to add a collection point prior to creating a basket.
