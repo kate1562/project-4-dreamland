@@ -1,22 +1,25 @@
-# Project 4 Dreamland festival app Readme 
+# Dreamland: a festival app
+
 ## Overview
 Dreamland is a full stack MERN app built with Python, React JS, Flask, SQLAlchemy, Marshmallow interacting with a PostgreSQL database. It was created for attendees and event staff to use onsite across the live days of the event. Due to the presumed use case we decided on a mobile first design. Attendees can view the festival line up, create their personal schedule and place bar orders whilst event staff can view incoming orders and update collection status. 
 
 Trello was used as a ticketing system and Balsamiq to wireframe the mobile design.
+
 🔗 http://dreamland-festival-app.herokuapp.com/
 
 ## Brief & Timeframe:
-Build a full-stack application by making your own backend and your own front-end
-Use a Python Flask API using a Flask REST Framework to serve your data from a Postgres database
-Consume your API with a separate front-end built with React
-Be a complete product which most likely means multiple relationships and CRUD functionality for at least a couple of models
-Implement thoughtful user stories/wireframes that are significant enough to help you know which features are core MVP and which you can cut
-Be deployed online so it's publicly accessible
-Timeframe: 1week
+* Build a full-stack application by making your own backend and your own front-end
+* Use a Python Flask API using a Flask REST Framework to serve your data from a Postgres database
+* Consume your API with a separate front-end built with React
+* Be a complete product which most likely means multiple relationships and CRUD functionality for at least a couple of models
+* Implement thoughtful user stories/wireframes that are significant enough to help you know which features are core MVP and which you can cut
+* Be deployed online so it's publicly accessible
+* Timeframe: 1week
 
 ### Team 🚀:
 Lydia Wood : https://github.com/lydiarrrw
 Fabien Depasse : https://github.com/fdepasse
+
 ## Technologies used
 ### Frontend:
 * JavaScript (ES6)
@@ -38,8 +41,10 @@ Fabien Depasse : https://github.com/fdepasse
 * PostgreSQL
 * bcrypt
 * jwt
+
 ### Testing:
 * pytest
+
 ### Dev Tools
 * GitHub
 * Git --> branching
@@ -51,11 +56,11 @@ Fabien Depasse : https://github.com/fdepasse
 * Trello
 * Insomnia
 * Quick Database Diagrams
+
 ## User journey 
 ### Homepage
 
 ### Line Up
-
 
 * To save an act to their personal lineup, the user changes the toggle to "on" which triggers an async function, saveArtistToUser. Passing the bearer token and act id as parameters the function generates an Axios PUT request to the backend in order to save an act to a user. 
 * If the act clashes with another in the users’ personal schedule this triggers an alert which pulls through a backend error message.
@@ -105,20 +110,7 @@ TablePlus allowed us to visualise the PostGreSQL database. We tested the backend
 On day 4 we moved on to the frontend and laid out the main components focusing on functionality first. I built the line-up page, artist information modal, food and beverage menu page and order system. React Hooks were used throughout, specifically useState and useEffect. Axios was used to request relevant data from the backend to display on the frontend with JSX.
 
 #### Line up page
-Axios was used to GET act data from the backend which was then saved as an array in state. To display the full lineup, the acts array was mapped over to render each artist as JSX. The filterByStage() function sorts acts by stage when the user clicks a stage tab. 
-
-
-
-
-* add code snippets where necessary 
-Filter by stage (usestate to catch data)
-Add to lineup feature 
-User must be logged in
-Used pretty checkbox library?
-Artist information modal
-Click artist name to toggle view modal state
-
-. React-router-dom was used to link between pages and navigate the site.
+* Axios was used to GET act data from the backend which was then saved as an array in state. To display the full lineup, the acts array was mapped over to render each artist as JSX. The filterByStage() function sorts acts by stage name when the user clicks a tab. 
 
 ### Styling 
 
