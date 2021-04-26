@@ -100,7 +100,7 @@ We focused heavily on planning during initially, outlining user stories and prod
 ![Screenshot 2021-04-26 at 14 40 02](https://user-images.githubusercontent.com/68645584/116091968-4acda700-a69d-11eb-8521-c9ec72d0af50.png)
 
 Using an Entity Relationship Diagram, we structured the database architecture: 
-![Screenshot 2021-04-26 at 14 40 23](https://user-images.githubusercontent.com/68645584/116092011-5751ff80-a69d-11eb-8d53-9c9092632bd1.png)
+<img width="935" alt="Screenshot 2021-04-26 at 14 51 49" src="https://user-images.githubusercontent.com/68645584/116093849-ef9cb400-a69e-11eb-9a62-21ecce7ba93a.png">
 
 For the frontend UI we produced a wireframe using Balsamiq which helped to cement our understanding of the app's functionality.
 ![Screenshot 2021-04-26 at 14 40 47](https://user-images.githubusercontent.com/68645584/116092067-65078500-a69d-11eb-8487-37a2005a80a1.png)
