@@ -1,4 +1,4 @@
-# Dreamland: a festival app
+# Dreamland: festival app
 
 ## Overview
 Dreamland is a full stack MERN app built with Python, React JS, Flask, SQLAlchemy, Marshmallow interacting with a PostgreSQL database. It was created for attendees and event staff to use onsite across the live days of the event. Due to the presumed use case we decided on a mobile first design. Attendees can view the festival line up, create their personal schedule and place bar orders whilst event staff can view incoming orders and update collection status. 
@@ -59,8 +59,10 @@ Fabien Depasse : https://github.com/fdepasse
 
 ## User journey 
 ### Homepage
+![Screenshot 2021-04-26 at 14 37 42](https://user-images.githubusercontent.com/68645584/116091670-f75b5900-a69c-11eb-8b51-fde5a1ec8f47.png)
 
 ### Line Up
+![Screenshot 2021-04-26 at 14 37 59](https://user-images.githubusercontent.com/68645584/116091701-0215ee00-a69d-11eb-9fb8-734ef77299c1.png)
 
 * To save an act to their personal lineup, the user changes the toggle to "on" which triggers an async function, saveArtistToUser. Passing the bearer token and act id as parameters the function generates an Axios PUT request to the backend in order to save an act to a user. 
 * If the act clashes with another in the users’ personal schedule this triggers an alert which pulls through a backend error message.
@@ -68,18 +70,20 @@ Fabien Depasse : https://github.com/fdepasse
 * In order to beautify the slider pretty checkbox library was installed with npm.  
  
 ### Artist Information
-
+![Screenshot 2021-04-26 at 14 38 13](https://user-images.githubusercontent.com/68645584/116091729-093cfc00-a69d-11eb-8c19-3a7dd0603330.png)
 ### Sign Up
-
+![Screenshot 2021-04-26 at 14 38 22](https://user-images.githubusercontent.com/68645584/116091758-0fcb7380-a69d-11eb-93f1-4e5d606ca426.png)
 ### Login
-
+![Screenshot 2021-04-26 at 14 38 36](https://user-images.githubusercontent.com/68645584/116091789-178b1800-a69d-11eb-8c31-27e724f4b625.png)
 ### Menu 
+![Screenshot 2021-04-26 at 14 38 57](https://user-images.githubusercontent.com/68645584/116091834-22de4380-a69d-11eb-8569-9509102a5c46.png)
 
 ### Admin
-⭐️ add some orders to an admin page and attach screenshot here 
-### User Profile 
 
+### User Profile 
+![Screenshot 2021-04-26 at 14 39 09](https://user-images.githubusercontent.com/68645584/116091854-2a9de800-a69d-11eb-9f80-ba5e6d6acc5c.png)
 * Users can view and amend their personal lineup and view more artist information. They can also view the status of any bar orders. 
+
 ### Functionality
 The functionality is similar to other event mobile apps, users are able to:
 * view live and upcoming acts
@@ -93,24 +97,93 @@ The functionality is similar to other event mobile apps, users are able to:
 From the outset we decided to keep a high level of communication and had daily standups to discuss current tasks and blockers. We kept in touch via Zoom and  Slack which was handy for any quick debugging. Git and GitHub were used for version control and we decided to push/pull as a team to avoid any potential issues or merge conflicts.The workload was delegated evenly between ourselves using Trello to manage tickets. 
 ### Planning
 We focused heavily on planning during initially, outlining user stories and product features in a white-boarding session. 
+![Screenshot 2021-04-26 at 14 40 02](https://user-images.githubusercontent.com/68645584/116091968-4acda700-a69d-11eb-8521-c9ec72d0af50.png)
 
 Using an Entity Relationship Diagram, we structured the database architecture: 
+![Screenshot 2021-04-26 at 14 40 23](https://user-images.githubusercontent.com/68645584/116092011-5751ff80-a69d-11eb-8d53-9c9092632bd1.png)
 
 For the frontend UI we produced a wireframe using Balsamiq which helped to cement our understanding of the app's functionality.
+![Screenshot 2021-04-26 at 14 40 47](https://user-images.githubusercontent.com/68645584/116092067-65078500-a69d-11eb-8487-37a2005a80a1.png)
 
 ### Backend 
 
 Using Trello to manage tickets we built the backend models, views and controllers over two days. I specifically built the act, product and order models which extended the base model using Python classes. 
 
 The act model was used to produce artist information for the overall festival lineup and the personal user schedule, it also had one to many relationships with the order and reactions models. For example, whilst placing an order a user must select an act to determine pickup time/location. Also, many users can react to an act live on stage by tapping the heart emoji on the homepage. 
-The order model was the basis for the food and beverage bar order system, it required one to many relationships with users and acts for pickup logistics. Due to the many-to-many relationship between products and orders it also links to the products_orders join table. 
+```javascript
+from app import db
+from models.base_model import BaseModel
+from models.order_model import Order
+from models.reaction_model import Reaction
 
+class Act(db.Model, BaseModel):
+
+    __tablename__ = "acts"
+
+    stage_name = db.Column(db.String(40), nullable=False)
+    set_time = db.Column(db.String(5), nullable=False)
+    artist_name = db.Column(db.String(50), nullable=False, unique=True)
+    image = db.Column(db.Text, nullable=False)
+    official_website = db.Column(db.Text, nullable=False)
+    genre = db.Column(db.String(40), nullable=False)
+    bio = db.Column(db.Text, nullable=False)
+    
+    #relationship 1 act to many orders
+    orders = db.relationship("Order", backref="act", cascade="all, delete")
+
+    #relationship 1 act to many reactions
+    reactions = db.relationship("Reaction", backref="act", cascade="all, delete")
+```
+
+The order model was the basis for the food and beverage bar order system, it required one to many relationships with users and acts for pickup logistics. Due to the many-to-many relationship between products and orders it also links to the products_orders join table. 
+```javascript
+from app import db
+from models.base_model import BaseModel
+from models.product_model import Product
+from models.products_orders_model import products_orders_join
+
+
+class Order(db.Model, BaseModel):
+    __tablename__ = "orders"
+
+    ready_to_collect = db.Column(db.Boolean, nullable =True)
+
+    #relationship 1 user to many orders
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"))
+
+    #relationship 1 act to many orders
+    act_id = db.Column(db.Integer, db.ForeignKey("acts.id", ondelete="CASCADE"))
+
+    #relationship many orders to many products
+    products = db.relationship("Product", backref = "orders", secondary=products_orders_join)
+```
 TablePlus allowed us to visualise the PostGreSQL database. We tested the backend using Insomnia to make requests and ensured the expected JSON response was received.
+
 ### Frontend 
 On day 4 we moved on to the frontend and laid out the main components focusing on functionality first. I built the line-up page, artist information modal, food and beverage menu page and order system. React Hooks were used throughout, specifically useState and useEffect. Axios was used to request relevant data from the backend to display on the frontend with JSX.
 
+
 #### Line up page
-* Axios was used to GET act data from the backend which was then saved as an array in state. To display the full lineup, the acts array was mapped over to render each artist as JSX. The filterByStage() function sorts acts by stage name when the user clicks a tab. 
+```javascript
+ async function getLineUp() {
+    try {
+      const { data } = await axios.get('/api/acts')
+      updateActs(data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  useEffect(() => {
+    getLineUp()
+  }, [])
+
+  function filterByStage() {
+    return acts.filter(act => {
+      return (act.stage_name === stage)
+    })
+  }
+```
+* Axios was used to GET act data from the backend which was then saved as an array of acts in state. To display the full lineup, the acts array was mapped over to render each artist as JSX. The filterByStage() function sorts acts by stage name when the user clicks a tab. 
 
 ### Styling 
 
@@ -131,6 +204,7 @@ The user
  The frontend allows the user to add products 
 Bearer token retrieved from localStorage 
 Using template literals to plug in the necessary variables 
+
 ### Known bugs and errors
 * Food and Drinks menu: can currently add products without a collection point which triggers an empty basket modal. This is due to the backend logic requiring all fields to create an order. I'd fix this by adding an error message on the front end to remind the user to add a collection point prior to creating a basket.
 * User Profile : display the personal lineup in order and render the most recent bar order once submitted.
