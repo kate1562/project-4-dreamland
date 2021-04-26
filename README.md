@@ -205,12 +205,13 @@ To combat the problem of waiting in line and missing the show we created an orde
     return updateProducts(tempProductArr)
   }
   
-   //function to get the act id for the api request 
+   //function to get the act id 
   function getActId(key) {
     const selectedAct = key.value
     updateActID(selectedAct)
   }
   
+  //function to render products in basket and trigger basket modal
   function displayBasket() {
     const tempBasket = []
     products.forEach(product => {
@@ -223,12 +224,12 @@ To combat the problem of waiting in line and missing the show we created an orde
     showModal(!modal)
   }
   
+  //function to create user order 
   async function submitUserOrder(token, actID, products) {
     try {
       await axios.post(`/api/order/${actID}`, { products: products }, {
         headers: { Authorization: `Bearer ${token}` }
       })
-      console.log()
     } catch (err) {
       console.log(err)
     }
