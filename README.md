@@ -86,13 +86,13 @@ Fabien Depasse : https://github.com/fdepasse
 
 ### Functionality
 The functionality is similar to other event mobile apps, users are able to:
-* view live and upcoming acts
-* post and delete reactions to current sets
-* browse artists by stage and create a personal lineup
-* sign up & login
-* view bar menu and submit an order
-* view collection status of food and drink orders
-* view and update collection status of incoming bar orders (with admin access) 
+* View live and upcoming acts.
+* Post and delete reactions to current sets.
+* Browse artists by stage and create a personal lineup.
+* Sign up & login.
+* View bar menu and submit an order.
+* View collection status of food and drink orders.
+* View and update collection status of incoming bar orders (with admin access). 
 ## Process
 From the outset we decided to keep a high level of communication and had daily standups to discuss current tasks and blockers. We kept in touch via Zoom and  Slack which was handy for any quick debugging. Git and GitHub were used for version control and we decided to push/pull as a team to avoid any potential issues or merge conflicts.The workload was delegated evenly between ourselves using Trello to manage tickets. 
 ### Planning
@@ -258,4 +258,4 @@ A mixture of Bulma and standard css practises were used for styling. To keep wit
 Some extra added functionality if there was more time:
 * Build out the user types to include event organisers, they could amend the lineup to account for any program changes. For example, they could post/put/delete acts. This feature could notify attendees when new artists announced in the lead up to the festival to promote app engagement.
 * Extend reactions feature to include a community social feed (display everything on Twitter with #dreamland2021). Give attendees a reason to use the app post event and notify them when dreamland2022 goes on sale!
-* Add a festival site map for users to navigate and make the bar collection points clearer from a UX perspective
+* Add a festival site map for users to navigate and make the bar collection points clearer from a UX perspective.
