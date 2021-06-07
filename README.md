@@ -1,7 +1,7 @@
 # Dreamland: festival app
 
 ## Overview
-Dreamland is a full stack MERN app built with Python, React JS, Flask, SQLAlchemy and Marshmallow interacting with a PostgreSQL database. It was created for attendees and event staff to use onsite across the live days of the event. Due to the presumed use case we decided on a mobile first design. Attendees can view the festival line up, create their personal schedule and place bar orders whilst event staff can view incoming orders and update collection status. 
+Dreamland is a full stack app built with Python, React JS, Flask, SQLAlchemy and Marshmallow interacting with a PostgreSQL database. It was created for attendees and event staff to use onsite across the live days of the event. Due to the presumed use case we decided on a mobile first design. Attendees can view the festival line up, create their personal schedule and place bar orders whilst event staff can view incoming orders and update collection status. 
 
 Trello was used as a ticketing system and Balsamiq to wireframe the mobile design.
 
