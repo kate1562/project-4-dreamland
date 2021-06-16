@@ -10,6 +10,11 @@ Trello was used as a ticketing system and Balsamiq to wireframe the mobile desig
 
 🔗 http://dreamland-festival-app.herokuapp.com/
 
+## Demo
+
+![dreamland](https://user-images.githubusercontent.com/68645584/122233228-cd136400-ceb3-11eb-9130-b3f9bd9a0398.gif)
+
+
 ## Brief & Timeframe:
 * Build a full-stack application by making your own backend and your own front-end
 * Use a Python Flask API using a Flask REST Framework to serve your data from a Postgres database
@@ -250,7 +255,7 @@ A mixture of Bulma and standard css practises were used for styling. To keep wit
 
 ### Wins:
 * Simple and functional responsive design across mobile and desktop devices.
-* This was my second full stack MERN app so it was interesting to use an alternative tech stack and practice Python fundamentals like classes, list and dictionary methods, functions and control flow statements. 
+* This was my second full stack app so it was interesting to use an alternative tech stack and practice Python fundamentals like classes, list and dictionary methods, functions and control flow statements. 
 * The team dynamic worked well throughout the project, we spoke regularly and had daily zoom standup to communicate any wins and blockers. In the case of the latter we discussed as a team and worked together to solve issues that arose.
 ### Key learnings:
 * After making three react apps, React Hooks helped me to think about the project as a whole in order to link up backend and frontend functionality. 
